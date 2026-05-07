@@ -57,18 +57,18 @@ const BookingPage = () => {
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 flex-1">
             
             {/* Booking Form Area */}
-            <div className="xl:col-span-2 space-y-10">
+            <div className="xl:col-span-2 space-y-24">
               
               {/* Date Selection */}
               <div>
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center justify-between mb-12">
                   <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-3">
                     <HiOutlineCalendar className="text-brand-green text-2xl" />
                     Select Date
                   </h3>
                   <div className="text-gray-500 text-xs font-bold uppercase tracking-widest">May 2024</div>
                 </div>
-                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
                   {dates.map((d, i) => (
                     <button
                       key={i}
@@ -88,11 +88,11 @@ const BookingPage = () => {
 
               {/* Slot Selection */}
               <div>
-                <h3 className="text-xl font-bold text-white mb-8 tracking-tight flex items-center gap-3">
+                <h3 className="text-xl font-bold text-white mb-12 tracking-tight flex items-center gap-3">
                   <HiOutlineClock className="text-brand-green text-2xl" />
                   Available Slots
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                   {slots.map((slot, i) => (
                     <button
                       key={i}
