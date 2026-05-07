@@ -16,7 +16,7 @@ export default function Home() {
       <HeroSection />
 
       {/* Features Section */}
-      <section id="features" className="py-32 bg-black border-t border-neutral-900">
+      <section id="features" className="py-48 bg-black border-t border-neutral-900">
         <div className="max-w-6xl mx-auto px-12 md:px-20 lg:px-24">
           <div className="flex flex-col md:flex-row justify-between items-end gap-16 mb-24">
             <div className="max-w-2xl">
@@ -80,7 +80,7 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-32 bg-[#050505] border-t border-neutral-900">
+      <section id="pricing" className="py-48 bg-[#050505] border-t border-neutral-900">
         <div className="max-w-6xl mx-auto px-12 md:px-20 lg:px-24">
           <div className="text-center mb-24 space-y-4">
             <span className="text-brand-green font-bold text-[10px] uppercase tracking-[0.6em] italic">The Registry</span>
@@ -112,7 +112,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-40 bg-black border-t border-neutral-900">
+      <section className="py-56 bg-black border-t border-neutral-900">
         <div className="max-w-6xl mx-auto px-12 md:px-20 lg:px-24">
           <div className="p-16 md:p-24 bg-neutral-950 border border-white/5 rounded-[32px] text-center space-y-10 relative overflow-hidden group shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-green/5 to-transparent pointer-events-none"></div>
