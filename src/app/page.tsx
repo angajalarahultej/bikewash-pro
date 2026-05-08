@@ -16,21 +16,19 @@ export default function Home() {
       <HeroSection />
 
       {/* Features Section */}
-      <section id="features" className="py-72 bg-black border-t border-neutral-900">
-        <div className="max-w-6xl mx-auto px-12 md:px-20 lg:px-24">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-24 mb-40">
-            <div className="max-w-2xl">
-              <span className="text-brand-green font-bold text-[10px] uppercase tracking-[0.6em] mb-4 block italic">The Standards</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight uppercase font-display">
-                Engineered for <br />
-                <span className="text-brand-green italic">Perfection.</span>
-              </h2>
-            </div>
-            <div className="max-w-sm pb-1">
-              <p className="text-neutral-500 text-base md:text-lg leading-relaxed italic font-serif">
-                We combine proprietary cleaning systems with artisanal care for a showroom-ready finish.
-              </p>
-            </div>
+      <section id="features" className="bw-section bg-black border-t border-neutral-900">
+        <div className="bw-container">
+          <div className="mb-16 space-y-10">
+            <span className="text-brand-green font-bold text-[10px] uppercase tracking-[0.6em] block italic text-center">
+              The Standards
+            </span>
+            <h2 className="bw-heading">
+              Engineered for <br />
+              <span className="text-brand-green italic">Perfection.</span>
+            </h2>
+            <p className="bw-paragraph">
+              We combine proprietary cleaning systems with artisanal care for a showroom-ready finish.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
@@ -63,7 +61,7 @@ export default function Home() {
                 </div>
                 <div className="space-y-3">
                   <h3 className="text-xl font-bold text-white tracking-tight uppercase font-display">{feature.title}</h3>
-                  <p className="text-neutral-500 text-sm leading-relaxed italic font-serif">
+                  <p className="bw-paragraph-sm">
                     {feature.desc}
                   </p>
                 </div>
@@ -80,14 +78,18 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-72 bg-[#050505] border-t border-neutral-900">
-        <div className="max-w-6xl mx-auto px-12 md:px-20 lg:px-24">
-          <div className="text-center mb-40 space-y-8">
-            <span className="text-brand-green font-bold text-[10px] uppercase tracking-[0.6em] italic">The Registry</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight uppercase font-display leading-none">
-              Simple <span className="text-brand-green italic font-display">Pricing.</span>
+      <section id="pricing" className="bw-section bg-[#050505] border-t border-neutral-900">
+        <div className="bw-container">
+          <div className="mb-16 space-y-10">
+            <span className="text-brand-green font-bold text-[10px] uppercase tracking-[0.6em] italic block text-center">
+              The Registry
+            </span>
+            <h2 className="bw-heading">
+              Simple <span className="text-brand-green italic">Pricing.</span>
             </h2>
-            <p className="text-neutral-500 text-base md:text-lg font-serif italic max-w-xl mx-auto leading-relaxed">Choose the detailing tier that fits your machine's needs.</p>
+            <p className="bw-paragraph">
+              Choose the detailing tier that fits your machine&apos;s needs.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
@@ -112,14 +114,14 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-80 bg-black border-t border-neutral-900">
-        <div className="max-w-6xl mx-auto px-12 md:px-20 lg:px-24">
-          <div className="p-16 md:p-24 bg-neutral-950 border border-white/5 rounded-[32px] text-center space-y-10 relative overflow-hidden group shadow-2xl">
+      <section className="bw-section bg-black border-t border-neutral-900">
+        <div className="bw-container">
+          <div className="p-10 md:p-16 bg-neutral-950 border border-white/5 rounded-[32px] text-center space-y-10 relative overflow-hidden group shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-green/5 to-transparent pointer-events-none"></div>
-            <h2 className="text-5xl md:text-6xl font-bold text-white tracking-tighter leading-none uppercase font-display italic">
-              Ready to <span className="text-brand-green not-italic">transform?</span>
+            <h2 className="bw-heading">
+              Ready to <span className="text-brand-green">transform?</span>
             </h2>
-            <p className="text-neutral-500 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-serif italic opacity-70">
+            <p className="bw-paragraph">
               Join thousands of elite riders who trust us with their machines. Book your premium detailing session today.
             </p>
             <Link href="/login" className="inline-block relative z-10">

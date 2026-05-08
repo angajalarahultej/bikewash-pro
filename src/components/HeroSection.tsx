@@ -17,8 +17,8 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto w-full px-12 md:px-20 lg:px-24 relative z-10">
-        <div className="max-w-2xl">
+      <div className="bw-container relative z-10">
+        <div className="max-w-none">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -32,15 +32,15 @@ const HeroSection = () => {
               </span>
               
               {/* Controlled Heading Size for Luxury Feel */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.2] font-display">
+              <h1 className="bw-heading">
                 The Art of <br />
-                <span className="text-brand-green italic font-display">Mechanical Care.</span>
+                <span className="text-brand-green italic">Mechanical Care.</span>
               </h1>
             </div>
 
             {/* Paragraph with comfortable leading */}
-            <p className="text-neutral-500 text-base md:text-lg lg:text-xl leading-relaxed italic max-w-xl font-serif">
-              Experience the pinnacle of motorcycle grooming. We combine proprietary technology with artisanal care to restore your machine's showroom soul.
+            <p className="bw-paragraph">
+              Experience the pinnacle of motorcycle grooming. We combine proprietary technology with artisanal care to restore your machine&apos;s showroom soul.
             </p>
 
             {/* CTA Actions with balanced gap */}

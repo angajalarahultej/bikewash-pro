@@ -7,7 +7,7 @@ import { FaInstagram, FaTwitter, FaFacebookF } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-[#05070a] border-t border-white/5 pt-24 pb-12 font-serif">
-      <div className="container mx-auto px-6">
+      <div className="bw-container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
           
           <div className="lg:col-span-1">
@@ -21,7 +21,7 @@ const Footer = () => {
                 BikeWash<span className="text-brand-green">Pro</span>
               </span>
             </Link>
-            <p className="text-gray-500 text-base leading-relaxed italic mb-8">
+            <p className="bw-paragraph mb-8">
               The gold standard in motorcycle detailing. We combine precision engineering with artisanal care to revive your machine.
             </p>
             <div className="flex items-center gap-4">

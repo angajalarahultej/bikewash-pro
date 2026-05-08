@@ -37,7 +37,7 @@ const PricingCard = ({ title, price, features, isPopular = false }: PricingCardP
         {features.map((feature, i) => (
           <div key={i} className="flex items-start gap-3 text-sm text-neutral-400">
             <HiCheck className="text-brand-green mt-0.5 shrink-0" />
-            <span>{feature}</span>
+            <span className="bw-paragraph-sm">{feature}</span>
           </div>
         ))}
       </div>
