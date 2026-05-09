@@ -3,85 +3,91 @@
 import Sidebar from "@/components/Sidebar";
 import { 
   HiOutlineUser, 
-  HiOutlineMail, 
+  HiOutlineEnvelope, 
   HiOutlinePhone, 
-  HiOutlineLocationMarker, 
-  HiOutlineLightningBolt,
+  HiOutlineMapPin, 
+  HiOutlineSparkles,
   HiOutlineGift,
-  HiOutlinePencil
-} from "react-icons/hi";
-import { 
-  HiOutlineWallet, 
+  HiOutlinePencilSquare,
+  HiOutlineCreditCard,
   HiOutlineQuestionMarkCircle,
-  HiOutlineCheckBadge
+  HiOutlineShieldCheck,
+  HiOutlineArrowRight
 } from "react-icons/hi2";
+import { motion } from "framer-motion";
 
 const ProfilePage = () => {
   const userData = {
-    name: "Naveen Kumar",
-    email: "naveen.kumar@example.com",
+    name: "Rahul Vijay",
+    email: "rahul.v@corporatepark.com",
     phone: "+91 98765 43210",
     bike: "Royal Enfield Himalayan 450",
-    membership: "Pro Member",
-    address: "123, Luxury Heights, Indiranagar, Bangalore, 560038",
-    walletBalance: "2,500",
-    rewardPoints: "450"
+    membership: "Premium Elite",
+    credits: "4",
+    rewardPoints: "1,250"
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col lg:flex-row overflow-x-hidden">
+    <div className="min-h-screen bg-background flex flex-col lg:flex-row overflow-x-hidden">
       <Sidebar />
       
-      {/* Main Content Area */}
-      <main className="flex-1 w-full min-h-screen bg-[#000000]">
-        <div className="max-w-7xl mx-auto p-8 md:p-12 lg:p-16 flex flex-col gap-10">
+      <main className="flex-1 w-full min-h-screen">
+        <div className="max-w-6xl mx-auto p-6 md:p-10 flex flex-col gap-10">
           
-          <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-16 lg:mt-0">
+          <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
-              <h1 className="text-3xl font-bold text-white mb-1 tracking-tight">
-                Profile
-              </h1>
-              <p className="text-neutral-500 text-sm">Manage your account and preferences.</p>
+              <h1 className="text-2xl font-bold text-primary mb-1">My Account</h1>
+              <p className="text-muted text-sm">Manage your personal settings and subscription.</p>
             </div>
-            <button className="minimal-btn-secondary py-2 text-xs">
-              <HiOutlinePencil className="text-sm" />
+            <button className="px-6 py-3 bg-white border border-border rounded-xl text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-surface-muted transition-all shadow-sm">
+              <HiOutlinePencilSquare className="text-lg" />
               Edit Profile
             </button>
           </header>
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
             
-            {/* Main Info */}
-            <div className="xl:col-span-2 space-y-6">
-              <div className="minimal-card overflow-hidden">
-                <div className="h-24 bg-neutral-900 border-b border-neutral-800 relative"></div>
-                <div className="px-8 pb-8 -mt-10 relative z-10">
-                  <div className="flex items-end gap-5 mb-8">
-                    <div className="w-24 h-24 rounded-xl bg-neutral-900 border-4 border-black flex items-center justify-center text-3xl font-bold text-brand-green shadow-xl">
-                      NK
+            {/* Main Info Column */}
+            <div className="xl:col-span-2 space-y-8">
+              {/* Profile Card */}
+              <div className="premium-card bg-white overflow-hidden shadow-xl shadow-primary/5">
+                <div className="h-32 bg-primary relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-20"></div>
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                </div>
+                <div className="px-8 pb-8 -mt-12 relative z-10">
+                  <div className="flex items-end gap-6 mb-10">
+                    <div className="w-24 h-24 rounded-[2rem] bg-white border-4 border-white flex items-center justify-center text-3xl font-black text-primary shadow-xl overflow-hidden">
+                       <img 
+                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&h=400&fit=crop" 
+                        alt="Profile" 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                    <div className="pb-1">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <h2 className="text-xl font-bold text-white">{userData.name}</h2>
-                        <HiOutlineCheckBadge className="text-blue-500 text-lg" />
+                    <div className="pb-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h2 className="text-2xl font-bold text-primary">{userData.name}</h2>
+                        <HiOutlineShieldCheck className="text-accent text-xl" />
                       </div>
-                      <div className="flex items-center gap-1.5 text-brand-green font-bold text-[10px] uppercase tracking-widest">
-                        <HiOutlineLightningBolt className="text-sm" />
-                        {userData.membership}
+                      <div className="flex items-center gap-1.5 text-accent font-black text-[10px] uppercase tracking-[0.2em] bg-accent/10 px-2 py-0.5 rounded">
+                        {userData.membership} Member
                       </div>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                     {[
-                      { icon: HiOutlineMail, label: "Email", value: userData.email },
-                      { icon: HiOutlinePhone, label: "Phone", value: userData.phone },
-                      { icon: HiOutlineUser, label: "Primary Bike", value: userData.bike },
-                      { icon: HiOutlineLocationMarker, label: "Saved Address", value: userData.address },
+                      { icon: HiOutlineEnvelope, label: "Email Address", value: userData.email },
+                      { icon: HiOutlinePhone, label: "Mobile Number", value: userData.phone },
+                      { icon: HiOutlineSparkles, label: "Primary Machine", value: userData.bike },
+                      { icon: HiOutlineMapPin, label: "Default Workplace", value: "Tech Park Tower A, B2" },
                     ].map((info, i) => (
-                      <div key={i} className="space-y-1">
-                        <div className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest">{info.label}</div>
-                        <div className="text-sm font-medium text-neutral-300 leading-relaxed">
+                      <div key={i} className="space-y-1 group cursor-default">
+                        <div className="text-[10px] font-bold text-muted/80 uppercase tracking-widest flex items-center gap-2">
+                          <info.icon className="text-muted/80" />
+                          {info.label}
+                        </div>
+                        <div className="text-sm font-bold text-primary truncate">
                           {info.value}
                         </div>
                       </div>
@@ -90,78 +96,88 @@ const ProfilePage = () => {
                 </div>
               </div>
 
+              {/* Action Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  { title: "Membership Perks", desc: "View your exclusive platinum benefits.", icon: HiOutlineCheckBadge },
-                  { title: "Service Centers", desc: "Find detailing stations in your city.", icon: HiOutlineLocationMarker },
-                ].map((item, i) => (
-                  <div key={i} className="minimal-card p-6 flex flex-col gap-4 cursor-pointer group">
-                    <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-white/5 flex items-center justify-center text-xl text-neutral-500 group-hover:text-brand-green transition-colors">
-                      <item.icon />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold text-white mb-1">{item.title}</h3>
-                      <p className="text-neutral-500 text-xs leading-relaxed">{item.desc}</p>
-                    </div>
+                <div className="premium-card p-6 bg-white flex flex-col gap-4 group cursor-pointer hover:border-accent/20 transition-all">
+                  <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center text-2xl text-accent group-hover:scale-110 transition-transform">
+                    <HiOutlineSparkles />
                   </div>
-                ))}
+                  <div>
+                    <h3 className="text-base font-bold text-primary mb-1">Membership Perks</h3>
+                    <p className="text-muted text-xs leading-relaxed">View your exclusive elite benefits and rewards.</p>
+                  </div>
+                  <HiOutlineArrowRight className="text-muted/80 ml-auto group-hover:text-accent transition-colors" />
+                </div>
+                <div className="premium-card p-6 bg-white flex flex-col gap-4 group cursor-pointer hover:border-primary/20 transition-all">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-2xl text-primary group-hover:scale-110 transition-transform">
+                    <HiOutlineMapPin />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-primary mb-1">Saved Locations</h3>
+                    <p className="text-muted text-xs leading-relaxed">Manage your office and basement parking spots.</p>
+                  </div>
+                  <HiOutlineArrowRight className="text-muted/80 ml-auto group-hover:text-primary transition-colors" />
+                </div>
               </div>
             </div>
 
-            {/* Sidebar Cards */}
-            <div className="space-y-6">
-              <div className="minimal-card p-8 bg-neutral-900 border-none relative overflow-hidden group">
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="w-10 h-10 rounded-lg bg-black flex items-center justify-center text-brand-green border border-white/5">
-                      <HiOutlineWallet className="text-xl" />
+            {/* Sidebar Column */}
+            <div className="space-y-8">
+              {/* Wallet Card */}
+              <div className="premium-card p-8 bg-primary text-white relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div className="relative z-10 flex flex-col">
+                  <div className="flex justify-between items-start mb-10">
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-accent border border-white/10">
+                      <HiOutlineCreditCard className="text-2xl" />
                     </div>
-                    <span className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest">Active</span>
+                    <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Active Credits</span>
                   </div>
-                  <div>
-                    <div className="text-neutral-500 text-[10px] uppercase font-bold tracking-wider mb-1">Balance</div>
-                    <div className="text-4xl font-bold text-white mb-8 tracking-tight">₹{userData.walletBalance}</div>
-                    <button className="minimal-btn-primary w-full py-2.5 text-xs">
-                      Add Funds
-                    </button>
+                  <div className="mb-10">
+                    <div className="text-5xl font-black text-white tracking-tighter flex items-end gap-2">
+                      {userData.credits}
+                      <span className="text-xs text-white/50 font-bold uppercase tracking-widest mb-2">Available</span>
+                    </div>
                   </div>
+                  <button className="w-full py-4 bg-accent text-white font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-accent/20 hover:scale-[1.02] transition-all">
+                    Top Up Credits
+                  </button>
                 </div>
               </div>
 
-              <div className="minimal-card p-6 space-y-6">
-                <div className="flex justify-between items-center">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-900 flex items-center justify-center text-brand-yellow border border-white/5">
-                    <HiOutlineGift className="text-xl" />
+              {/* Rewards Card */}
+              <div className="premium-card p-6 bg-white border-2 border-amber-100 shadow-xl shadow-amber-500/5">
+                <div className="flex justify-between items-center mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
+                    <HiOutlineGift className="text-2xl" />
                   </div>
                   <div className="text-right">
-                    <div className="text-neutral-500 text-[10px] uppercase font-bold tracking-wider">Points</div>
-                    <div className="text-xl font-bold text-white">{userData.rewardPoints}</div>
+                    <div className="text-[10px] font-black text-muted/80 uppercase tracking-widest">Points</div>
+                    <div className="text-xl font-black text-primary">{userData.rewardPoints}</div>
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <p className="text-xs text-neutral-500">50 points remaining for your next reward.</p>
-                  <div className="h-1.5 w-full bg-neutral-900 rounded-full overflow-hidden">
-                    <div className="h-full bg-brand-yellow w-[90%] rounded-full"></div>
+                  <p className="text-[10px] text-muted font-bold uppercase tracking-wider">Progress to next free wash</p>
+                  <div className="h-2 w-full bg-border rounded-full overflow-hidden">
+                    <div className="h-full bg-amber-400 w-[75%] rounded-full shadow-[0_0_10px_rgba(251,191,36,0.3)]"></div>
                   </div>
-                  <button className="text-brand-green text-[10px] font-bold uppercase tracking-widest hover:underline">History →</button>
+                  <button className="text-amber-600 text-[10px] font-black uppercase tracking-widest hover:underline flex items-center gap-1">
+                    Redeem Rewards <HiOutlineArrowRight />
+                  </button>
                 </div>
               </div>
 
-              <div className="minimal-card p-6 flex flex-col gap-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-900 flex items-center justify-center text-white">
-                    <HiOutlineQuestionMarkCircle className="text-xl" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-white">Support</h4>
-                    <p className="text-neutral-600 text-[9px] uppercase tracking-widest">Available 24/7</p>
-                  </div>
+              {/* Support Card */}
+              <div className="premium-card p-6 bg-primary text-white flex items-center gap-4 group cursor-pointer hover:bg-[#333] transition-colors">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-2xl group-hover:text-accent transition-colors">
+                  <HiOutlineQuestionMarkCircle />
                 </div>
-                <button className="minimal-btn-secondary w-full py-2 text-xs">
-                  Get Help
-                </button>
+                <div className="flex-1">
+                  <h4 className="text-sm font-bold">24/7 Support</h4>
+                  <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest">Need help with a wash?</p>
+                </div>
+                <HiOutlineArrowRight className="text-white/20 group-hover:text-white transition-colors" />
               </div>
-
             </div>
 
           </div>

@@ -14,42 +14,42 @@ const SlotCard = ({ time, booked, total, status }: SlotCardProps) => {
   const isWaiting = status === "waiting";
   
   const statusColors = {
-    full: "bg-red-500/10 text-red-500 border-red-500/20",
-    waiting: "bg-brand-yellow/10 text-brand-yellow border-brand-yellow/20",
-    available: "bg-brand-green/10 text-brand-green border-brand-green/20",
+    full: "bg-error/10 text-error border-error/20",
+    waiting: "bg-warning/10 text-warning border-warning/20",
+    available: "bg-success/10 text-success border-success/20",
   };
 
   const progressColors = {
-    full: "bg-red-500",
-    waiting: "bg-brand-yellow",
-    available: "bg-brand-green",
+    full: "bg-error",
+    waiting: "bg-warning",
+    available: "bg-success",
   };
 
   return (
     <motion.div
       whileHover={!isFull ? { y: -5 } : {}}
-      className={`p-8 rounded-[32px] border transition-all duration-300 relative overflow-hidden flex flex-col h-full ${
+      className={`p-6 rounded-[2rem] border transition-all duration-300 relative overflow-hidden flex flex-col h-full bg-white shadow-xl shadow-primary/5 ${
         isFull 
-          ? "bg-white/[0.01] border-white/5 opacity-60" 
-          : "bg-[#0a0a0a] border-white/5 hover:border-brand-green/30"
+          ? "border-border opacity-60" 
+          : "border-border hover:border-primary/20"
       }`}
     >
-      <div className="flex justify-between items-start mb-8">
+      <div className="flex justify-between items-start mb-6">
         <div>
-          <h3 className="text-2xl font-black text-white mb-1 tracking-tight">{time}</h3>
-          <div className="text-gray-500 text-xs font-bold uppercase tracking-widest">60 Min Session</div>
+          <h3 className="text-xl font-bold text-primary mb-1 tracking-tight">{time}</h3>
+          <div className="text-muted text-[10px] font-black uppercase tracking-widest">60 Min Session</div>
         </div>
-        <div className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${statusColors[status]}`}>
+        <div className={`px-2 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest border ${statusColors[status]}`}>
           {status === "full" ? "Sold Out" : status === "waiting" ? "Fast Filling" : "Available"}
         </div>
       </div>
 
       <div className="mt-auto">
-        <div className="flex justify-between text-[11px] font-black mb-3 uppercase tracking-widest">
-          <span className="text-gray-500">Slot Occupancy</span>
-          <span className={isFull ? "text-red-500" : "text-white"}>{booked} / {total}</span>
+        <div className="flex justify-between text-[9px] font-black mb-2 uppercase tracking-widest">
+          <span className="text-muted">Slot Occupancy</span>
+          <span className={isFull ? "text-error" : "text-primary"}>{booked} / {total}</span>
         </div>
-        <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden mb-8">
+        <div className="h-1.5 w-full bg-border rounded-full overflow-hidden mb-6">
           <motion.div 
             initial={{ width: 0 }}
             animate={{ width: `${(booked / total) * 100}%` }}
@@ -60,12 +60,12 @@ const SlotCard = ({ time, booked, total, status }: SlotCardProps) => {
 
         <button
           disabled={isFull}
-          className={`w-full py-4 rounded-2xl text-sm font-black uppercase tracking-widest transition-all ${
+          className={`w-full py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
             isFull
-              ? "bg-white/5 text-gray-600 cursor-not-allowed border border-white/5"
+              ? "bg-surface-muted text-muted/60 cursor-not-allowed border border-border"
               : isWaiting
-                ? "bg-brand-yellow text-black hover:bg-yellow-500 hover:scale-[1.02]"
-                : "bg-brand-green text-black hover:bg-green-400 hover:scale-[1.02] shadow-lg shadow-brand-green/20"
+                ? "bg-primary text-white hover:bg-black hover:scale-[1.02] shadow-lg shadow-primary/20"
+                : "bg-success text-white hover:opacity-90 hover:scale-[1.02] shadow-lg shadow-success/20"
           }`}
         >
           {isFull ? "Join Waitlist" : isWaiting ? "Priority Booking" : "Confirm Slot"}

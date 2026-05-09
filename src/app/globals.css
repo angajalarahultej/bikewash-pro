@@ -3,29 +3,45 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-brand-green: #22c55e;
-  --color-brand-yellow: #eab308;
-  --color-surface: #0a0a0a;
-  --color-surface-hover: #121212;
-  --color-border: rgba(255, 255, 255, 0.05);
+  --color-primary: #111111;
+  --color-secondary: #ffffff;
+  --color-accent: #60a5fa;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f9fafb;
+  --color-border: #e5e7eb;
+  --color-muted: #6b7280;
+  
+  --color-sidebar: #dceeff;
+  --color-sidebar-text: #111111;
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
   
   --font-display: "Times New Roman", Times, serif;
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-body: "Times New Roman", Times, serif;
+
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+
+  --shadow-premium: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --brand-green: #22c55e;
-  --brand-yellow: #eab308;
-  --surface: #0a0a0a;
-  --border: rgba(255, 255, 255, 0.05);
+  --background: #f5f0e6;
+  --foreground: #111111;
+  --primary: #111111;
+  --secondary: #ffffff;
+  --accent: #60a5fa;
+  --surface: #ffffff;
+  --border: #e5e7eb;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* ============================
+   GLOBAL RESET & BOX MODEL
+   ============================ */
+*, *::before, *::after {
+  box-sizing: border-box !important;
 }
 
 html {
@@ -36,156 +52,338 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body);
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   min-height: 100%;
-  line-height: 1.5;
 }
 
+/* ============================
+   TYPOGRAPHY SCALE
+   ============================ */
 @layer base {
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display) !important;
-    line-height: 1.2 !important;
-    letter-spacing: -0.02em;
-    color: #ffffff;
+  h1 {
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 45px !important;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+    color: var(--primary);
   }
-  
-  p, span, div, button, input, select, textarea {
-    font-family: var(--font-body);
+
+  h2 {
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 32px !important;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+  }
+
+  h3 {
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 26px !important;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+  }
+
+  h4, h5, h6 {
+    font-family: "Times New Roman", Times, serif !important;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.3px;
+    color: var(--primary);
+  }
+
+  label {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-family: "Times New Roman", Times, serif;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
   }
 }
 
-/* Minimal Card Style */
-.minimal-card {
+/* ============================
+   GLOBAL TEXT OVERFLOW PROTECTION
+   ============================ */
+*:not(svg):not(path):not(circle):not(rect):not(line):not(polyline):not(polygon):not(ellipse) {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ============================
+   LAYOUT CONTAINER
+   ============================ */
+.bw-container {
+  width: 100%;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (max-width: 768px) {
+  .bw-container {
+    max-width: 94%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* ============================
+   GLASSMORPHISM
+   ============================ */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================
+   PREMIUM CARD
+   ============================ */
+.premium-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  transition: all 0.2s ease;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-premium);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 0;
+  padding: 32px;
 }
 
-.minimal-card:hover {
-  background: var(--color-surface-hover);
-  border-color: rgba(255, 255, 255, 0.1);
+.premium-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* Minimal Input Style */
-.minimal-input {
-  background: #050505;
+/* ============================
+   GLOBAL PADDING ALIGNMENT
+   ============================ */
+
+/* Section bw-container gets symmetric horizontal breathing room */
+section > .bw-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media (max-width: 768px) {
+  section > .bw-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* Center-text utility for section headings and description blocks */
+.section-header {
+  text-align: center;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px;
+  margin-bottom: 40px;
+}
+
+/* Table containers: give table cells room to breathe */
+table th,
+table td {
+  padding: 16px 20px !important;
+  vertical-align: middle;
+}
+
+/* Glass cards get equal internal spacing (not navbars) */
+.glass:not(nav):not(header) {
+  padding: 32px;
+}
+
+@media (max-width: 640px) {
+  .glass:not(nav):not(header) {
+    padding: 20px;
+  }
+}
+
+/* Footer columns: center link text and keep content off the edges */
+footer .bw-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+footer ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+footer li {
+  text-align: center;
+}
+
+/* Cards inside grids: no margin collapse at top/bottom edges */
+.premium-card > *:first-child {
+  margin-top: 0;
+}
+
+.premium-card > *:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ============================
+   STAT / METRIC CARDS
+   ============================ */
+.global-stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-height: 180px;
+  padding: 32px;
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 16px;
-  color: #ffffff;
-  transition: all 0.2s ease;
-  font-size: 14px;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-premium);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 0;
+  transition: all 0.3s ease;
 }
 
-.minimal-input:focus {
+.global-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================
+   INPUT WRAPPER — ICON SAFE
+   ============================ */
+.global-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.global-input-wrapper .input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--muted, #6b7280);
+  font-size: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.global-input-wrapper input {
+  width: 100%;
+  padding-left: 48px;
+  padding-right: 16px;
+  height: 52px;
+  font-size: 15px;
+  font-family: "Times New Roman", Times, serif;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--surface-muted, #f9fafb);
+  color: var(--primary);
   outline: none;
-  border-color: var(--brand-green);
-  background: #080808;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.minimal-input::placeholder {
-  color: #525252;
+.global-input-wrapper input:focus {
+  border-color: var(--accent, #60a5fa);
+  background: var(--surface, #ffffff);
 }
 
-/* Minimal Button Style */
-.minimal-btn-primary {
-  background: var(--brand-green);
-  color: #000000;
-  font-weight: 600;
-  padding: 10px 20px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+/* ============================
+   PREMIUM BUTTON
+   ============================ */
+.btn-premium {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-size: 14px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-family: "Times New Roman", Times, serif;
+  transition: all 0.2s ease;
+  gap: 0.5rem;
+  white-space: nowrap;
 }
 
-.minimal-btn-primary:hover {
-  opacity: 0.9;
+.btn-premium-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-premium-primary:hover {
+  background: #333333;
   transform: translateY(-1px);
 }
 
-.minimal-btn-secondary {
-  background: transparent;
+.btn-premium-secondary {
+  background: var(--surface);
+  color: var(--primary);
   border: 1px solid var(--border);
-  color: #ffffff;
-  font-weight: 500;
-  padding: 10px 20px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 14px;
 }
 
-.minimal-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
+.btn-premium-secondary:hover {
+  background: var(--surface-muted);
+  transform: translateY(-1px);
 }
 
-/* Section Spacing */
-.section-padding {
-  padding: 80px 0;
+.btn-premium-outline {
+  border: 2px solid var(--border);
+  background: transparent;
+  color: var(--primary);
 }
 
-/* BikeWashPro landing typography + layout system */
-.bw-container {
-  width: 100%;
-  max-width: 80vw; /* 10% left + 10% right */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(24px, 4vw, 40px);
-  padding-right: clamp(24px, 4vw, 40px);
+.btn-premium-outline:hover {
+  background: var(--border);
 }
 
-.bw-section {
-  padding-top: 80px;
-  padding-bottom: 80px;
+/* ============================
+   GRADIENT BACKGROUNDS
+   ============================ */
+.bg-gradient-premium {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border: 1px solid var(--border);
 }
 
-@media (min-width: 768px) {
-  .bw-section {
-    padding-top: 96px;
-    padding-bottom: 96px;
-  }
+.text-gradient-premium {
+  background: linear-gradient(135deg, #111111 0%, #6b7280 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.bw-heading {
-  font-family: var(--font-display) !important; /* Times New Roman */
-  font-size: 45px;
-  font-weight: 700;
-  line-height: 1.15;
-  text-align: center;
-  letter-spacing: -0.01em;
-}
-
-.bw-paragraph {
-  font-family: var(--font-display) !important; /* Times New Roman */
-  font-size: 25px;
-  line-height: 1.8;
-  text-align: left;
-  color: #a3a3a3; /* softer gray */
-}
-
-/* For small supporting copy where 25px is too large (cards, footer links). */
-.bw-paragraph-sm {
-  font-family: var(--font-display) !important;
-  font-size: 15px;
-  line-height: 1.8;
-  text-align: left;
-  color: #a3a3a3;
-}
-
-/* Custom scrollbar */
+/* ============================
+   CUSTOM SCROLLBAR
+   ============================ */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -193,10 +391,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1a1a1a;
+  background: #e2e8f0;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2a2a2a;
+  background: #cbd5e1;
 }

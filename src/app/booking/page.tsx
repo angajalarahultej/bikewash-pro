@@ -2,187 +2,260 @@
 
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
+import BookingStepper from "@/components/BookingStepper";
 import { 
-  HiOutlineCalendar, 
+  HiOutlineCalendarDays, 
   HiOutlineClock, 
   HiOutlineCheckCircle, 
   HiOutlineInformationCircle,
   HiOutlineChevronRight,
-  HiOutlineChevronLeft
-} from "react-icons/hi";
+  HiOutlineChevronLeft,
+  HiOutlineMapPin,
+  HiOutlineTruck
+} from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const BookingPage = () => {
-  const [selectedDate, setSelectedDate] = useState("2024-05-10");
-  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [step, setStep] = useState(1);
+  const [bookingData, setBookingData] = useState({
+    vehicle: "",
+    date: "2024-05-10",
+    slot: "",
+    tower: "",
+    basement: "",
+    slotNumber: ""
+  });
+
+  const steps = [
+    { id: 1, label: "Vehicle" },
+    { id: 2, label: "Time Slot" },
+    { id: 3, label: "Parking" },
+    { id: 4, label: "Confirm" }
+  ];
+
+  const vehicles = [
+    { id: "v1", brand: "Royal Enfield", model: "Himalayan", reg: "KA-01-HE-1234", color: "Pine Green" },
+    { id: "v2", brand: "KTM", model: "Duke 390", reg: "KA-03-MK-5678", color: "Orange" }
+  ];
 
   const slots = [
-    { time: "09:00 AM", available: true },
-    { time: "10:00 AM", available: false },
-    { time: "11:00 AM", available: true },
-    { time: "12:00 PM", available: true },
-    { time: "01:00 PM", available: true },
-    { time: "02:00 PM", available: false },
-    { time: "03:00 PM", available: true },
-    { time: "04:00 PM", available: true },
-    { time: "05:00 PM", available: true },
-    { time: "06:00 PM", available: true },
+    { id: "s1", time: "07:00 AM – 09:00 AM", label: "Early Bird" },
+    { id: "s2", time: "09:00 AM – 11:00 AM", label: "Morning Slot" },
+    { id: "s3", time: "11:00 AM – 06:00 PM", label: "Office Hours Slot", popular: true }
   ];
 
-  const dates = [
-    { label: "Fri", day: "10", date: "2024-05-10" },
-    { label: "Sat", day: "11", date: "2024-05-11" },
-    { label: "Sun", day: "12", date: "2024-05-12" },
-    { label: "Mon", day: "13", date: "2024-05-13" },
-    { label: "Tue", day: "14", date: "2024-05-14" },
-    { label: "Wed", day: "15", date: "2024-05-15" },
-    { label: "Thu", day: "16", date: "2024-05-16" },
-  ];
+  const nextStep = () => setStep(s => Math.min(s + 1, 4));
+  const prevStep = () => setStep(s => Math.max(s - 1, 1));
 
-  return (
-    <div className="min-h-screen bg-black text-white flex flex-col lg:flex-row overflow-x-hidden font-serif">
-      <Sidebar />
-      
-      <main className="flex-1 w-full min-h-screen relative flex flex-col bg-[#000000]">
-        <div className="max-w-7xl mx-auto p-8 md:p-12 lg:p-16 w-full relative z-10 flex-1 flex flex-col">
-          
-          <header className="mb-12 mt-20 lg:mt-0">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight uppercase">
-              Book a <span className="text-brand-green">Wash</span>
-            </h1>
-            <p className="text-gray-400 text-base">Select your preferred date and time slot for the service.</p>
-          </header>
-
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 flex-1">
-            
-            {/* Booking Form Area */}
-            <div className="xl:col-span-2 space-y-24">
-              
-              {/* Date Selection */}
-              <div>
-                <div className="flex items-center justify-between mb-12">
-                  <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-3">
-                    <HiOutlineCalendar className="text-brand-green text-2xl" />
-                    Select Date
-                  </h3>
-                  <div className="text-gray-500 text-xs font-bold uppercase tracking-widest">May 2024</div>
-                </div>
-                <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-                  {dates.map((d, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setSelectedDate(d.date)}
-                      className={`flex flex-col items-center justify-center min-w-[80px] h-24 rounded-2xl border transition-all duration-300 ${
-                        selectedDate === d.date 
-                          ? "bg-brand-green border-brand-green text-black shadow-xl shadow-brand-green/20 scale-105" 
-                          : "bg-[#0f1115] border-white/5 text-gray-500 hover:border-white/20 hover:text-white"
-                      }`}
-                    >
-                      <span className="text-[10px] font-bold uppercase tracking-widest mb-1">{d.label}</span>
-                      <span className="text-2xl font-bold">{d.day}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Slot Selection */}
-              <div>
-                <h3 className="text-xl font-bold text-white mb-12 tracking-tight flex items-center gap-3">
-                  <HiOutlineClock className="text-brand-green text-2xl" />
-                  Available Slots
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                  {slots.map((slot, i) => (
-                    <button
-                      key={i}
-                      disabled={!slot.available}
-                      onClick={() => setSelectedSlot(slot.time)}
-                      className={`py-5 rounded-2xl border transition-all duration-300 flex flex-col items-center justify-center gap-2 ${
-                        !slot.available 
-                          ? "bg-white/[0.02] border-white/5 text-gray-700 cursor-not-allowed" 
-                          : selectedSlot === slot.time
-                            ? "bg-[#162a1e] border-brand-green text-brand-green shadow-xl"
-                            : "bg-[#0f1115] border-white/5 text-gray-400 hover:border-white/20 hover:text-white"
-                      }`}
-                    >
-                      <span className="text-base font-bold">{slot.time}</span>
-                      <span className={`text-[9px] font-bold uppercase tracking-widest ${slot.available ? "text-brand-green/60" : "text-gray-700"}`}>
-                        {slot.available ? "Available" : "Booked"}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Service Info Note */}
-              <div className="p-6 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex gap-4">
-                <HiOutlineInformationCircle className="text-2xl text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-blue-400 font-bold text-sm uppercase tracking-widest mb-1">Service Note</h4>
-                  <p className="text-gray-500 text-sm italic leading-relaxed">
-                    Standard washes take approximately 25-40 minutes. Please arrive at least 10 minutes before your scheduled slot.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Order Summary Sidebar */}
-            <div className="xl:col-span-1">
-              <div className="sticky top-12 bg-[#0f1115] border border-white/5 rounded-[32px] p-8 shadow-2xl">
-                <h3 className="text-xl font-bold text-white mb-8 uppercase tracking-tight">Summary</h3>
-                
-                <div className="space-y-6 mb-10">
-                  <div className="flex justify-between items-start">
-                    <div className="text-gray-500 text-xs uppercase tracking-widest font-bold">Service Type</div>
-                    <div className="text-right">
-                      <div className="text-white font-bold">Pro Detail</div>
-                      <div className="text-brand-green text-[10px] font-bold uppercase tracking-widest mt-1">₹499</div>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="text-gray-500 text-xs uppercase tracking-widest font-bold">Date</div>
-                    <div className="text-white font-bold">May 10, 2024</div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="text-gray-500 text-xs uppercase tracking-widest font-bold">Time Slot</div>
-                    <div className="text-white font-bold">{selectedSlot || "Not Selected"}</div>
-                  </div>
-                </div>
-
-                <div className="pt-8 border-t border-white/5 space-y-4 mb-8">
-                  <div className="flex justify-between items-center">
-                    <div className="text-gray-400 text-sm font-bold">Subtotal</div>
-                    <div className="text-white font-bold">₹499</div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="text-gray-400 text-sm font-bold">Taxes (GST)</div>
-                    <div className="text-white font-bold">₹0</div>
-                  </div>
-                  <div className="flex justify-between items-center pt-4">
-                    <div className="text-white font-bold text-lg uppercase tracking-tight">Total</div>
-                    <div className="text-brand-green font-bold text-2xl tracking-tighter">₹499</div>
-                  </div>
-                </div>
-
-                <button 
-                  disabled={!selectedSlot}
-                  className={`w-full py-5 rounded-2xl font-bold text-sm uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 ${
-                    selectedSlot 
-                      ? "bg-brand-green text-black shadow-xl shadow-brand-green/20 hover:scale-[1.02]" 
-                      : "bg-white/5 text-gray-600 cursor-not-allowed"
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+            <h3 style={{ paddingTop: "16px", marginBottom: "24px", display: "flex", alignItems: "center", gap: "10px" }}>
+              <HiOutlineTruck style={{ color: "var(--accent)", flexShrink: 0 }} />
+              Select Your Vehicle
+            </h3>
+            <div className="grid gap-4">
+              {vehicles.map(v => (
+                <button
+                  key={v.id}
+                  onClick={() => setBookingData({ ...bookingData, vehicle: v.reg })}
+                  className={`premium-card p-6 flex items-center justify-between transition-all ${
+                    bookingData.vehicle === v.reg ? "border-accent bg-accent/5 ring-1 ring-accent/20" : "bg-white"
                   }`}
                 >
-                  Confirm & Pay
-                  <HiOutlineChevronRight className="text-xl" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-surface-muted rounded-xl flex items-center justify-center text-primary font-bold">
+                      {v.brand[0]}
+                    </div>
+                    <div className="text-left">
+                      <div className="font-bold text-primary">{v.brand} {v.model}</div>
+                      <div className="text-xs text-muted font-medium uppercase tracking-wider">{v.reg} • {v.color}</div>
+                    </div>
+                  </div>
+                  {bookingData.vehicle === v.reg && <HiOutlineCheckCircle className="text-2xl text-accent" />}
                 </button>
-                
-                <p className="text-center text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-6">
-                  Secure Payment • SSL Encrypted
-                </p>
+              ))}
+              <Link href="/add-vehicle" className="p-4 border-2 border-dashed border-border rounded-2xl flex items-center justify-center gap-2 text-muted/80 hover:text-primary hover:border-primary/20 transition-all">
+                <HiOutlinePlusCircle className="text-xl" />
+                <span className="text-sm font-bold">Add New Vehicle</span>
+              </Link>
+            </div>
+          </motion.div>
+        );
+      case 2:
+        return (
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+            <h3 style={{ paddingTop: "16px", marginBottom: "24px", display: "flex", alignItems: "center", gap: "10px" }}>
+              <HiOutlineClock style={{ color: "var(--accent)", flexShrink: 0 }} />
+              Choose Time Slot
+            </h3>
+            <div className="grid gap-4">
+              {slots.map(s => (
+                <button
+                  key={s.id}
+                  onClick={() => setBookingData({ ...bookingData, slot: s.time })}
+                  className={`premium-card p-6 flex items-center justify-between transition-all ${
+                    bookingData.slot === s.time ? "border-accent bg-accent/5 ring-1 ring-accent/20" : "bg-white"
+                  }`}
+                >
+                  <div className="text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="font-bold text-primary">{s.time}</div>
+                      {s.popular && <span className="px-2 py-0.5 bg-accent text-white text-[8px] font-black uppercase rounded">Recommended</span>}
+                    </div>
+                    <div className="text-xs text-muted font-medium uppercase tracking-wider">{s.label}</div>
+                  </div>
+                  {bookingData.slot === s.time && <HiOutlineCheckCircle className="text-2xl text-accent" />}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        );
+      case 3:
+        return (
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+            <h3 style={{ paddingTop: "16px", marginBottom: "24px", display: "flex", alignItems: "center", gap: "10px" }}>
+              <HiOutlineMapPin style={{ color: "var(--accent)", flexShrink: 0 }} />
+              Parking Details
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-black text-muted/80 uppercase tracking-widest" style={{ marginBottom: "16px", display: "block", paddingTop: "8px" }}>Building / Tower</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. Tower A" 
+                  className="w-full px-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-accent transition-all font-bold text-sm"
+                  value={bookingData.tower}
+                  onChange={e => setBookingData({...bookingData, tower: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-muted/80 uppercase tracking-widest ml-1">Parking Floor</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. B2" 
+                  className="w-full px-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-accent transition-all font-bold text-sm"
+                  value={bookingData.basement}
+                  onChange={e => setBookingData({...bookingData, basement: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2 sm:col-span-2">
+                <label className="text-[10px] font-black text-muted/80 uppercase tracking-widest ml-1">Parking Slot Number</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. #142" 
+                  className="w-full px-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-accent transition-all font-bold text-sm"
+                  value={bookingData.slotNumber}
+                  onChange={e => setBookingData({...bookingData, slotNumber: e.target.value})}
+                />
               </div>
             </div>
+            <div className="p-4 bg-surface-muted rounded-xl border border-border flex gap-3">
+              <HiOutlineInformationCircle className="text-xl text-muted/80 shrink-0 mt-0.5" />
+              <p className="text-xs text-muted leading-relaxed font-medium">
+                Accurate parking details help our workers find your vehicle faster. You can also upload a photo of your parked bike on the next screen.
+              </p>
+            </div>
+          </motion.div>
+        );
+      case 4:
+        return (
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-8">
+            <h3 className="text-xl font-bold text-primary">Review & Confirm</h3>
+            <div className="premium-card bg-surface-muted p-6 space-y-6">
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="text-xs font-bold text-muted/80 uppercase">Vehicle</span>
+                <span className="text-sm font-bold text-primary">{bookingData.vehicle}</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="text-xs font-bold text-muted/80 uppercase">Time Slot</span>
+                <span className="text-sm font-bold text-primary">{bookingData.slot}</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="text-xs font-bold text-muted/80 uppercase">Location</span>
+                <span className="text-sm font-bold text-primary">{bookingData.tower}, {bookingData.basement}, {bookingData.slotNumber}</span>
+              </div>
+              <div className="flex justify-between items-center py-2 pt-4">
+                <span className="text-sm font-bold text-primary uppercase tracking-widest">Subscription Credit</span>
+                <span className="text-lg font-black text-accent">1 Credit</span>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3 p-4 bg-success/10 rounded-2xl border border-success/20">
+              <div className="w-10 h-10 bg-success rounded-full flex items-center justify-center text-white">
+                <HiOutlineCheckCircle className="text-2xl" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-success">You&apos;re all set!</div>
+                <div className="text-[10px] text-success font-bold uppercase tracking-widest opacity-80">Premium membership benefit applied</div>
+              </div>
+            </div>
+          </motion.div>
+        );
+    }
+  };
 
+  const isStepValid = () => {
+    if (step === 1) return !!bookingData.vehicle;
+    if (step === 2) return !!bookingData.slot;
+    if (step === 3) return !!bookingData.tower && !!bookingData.basement && !!bookingData.slotNumber;
+    return true;
+  };
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col lg:flex-row overflow-x-hidden">
+      <Sidebar />
+      
+      <main className="flex-1 w-full min-h-screen relative flex flex-col pt-20 lg:pt-0">
+        <div className="max-w-4xl mx-auto p-6 md:p-10 w-full flex-1 flex flex-col">
+          
+          <header style={{ marginBottom: "32px", paddingBottom: "16px" }}>
+            <h1 style={{ textAlign: "left", fontSize: "32px" }}>Schedule a Wash</h1>
+            <p className="text-muted text-sm" style={{ marginTop: "8px" }}>Follow the steps below to book your workplace vehicle care.</p>
+          </header>
+
+          <BookingStepper steps={steps} currentStep={step} />
+
+          <div className="flex-1 mt-8">
+            <AnimatePresence mode="wait">
+              {renderStep()}
+            </AnimatePresence>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-border flex justify-between items-center">
+            <button
+              onClick={prevStep}
+              disabled={step === 1}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all ${
+                step === 1 ? "opacity-0 pointer-events-none" : "text-muted/80 hover:text-primary hover:bg-surface-muted"
+              }`}
+            >
+              <HiOutlineChevronLeft className="text-xl" />
+              Back
+            </button>
+            
+            {step < 4 ? (
+              <button
+                onClick={nextStep}
+                disabled={!isStepValid()}
+                className={`btn-premium btn-premium-primary px-10 py-4 shadow-xl shadow-primary/20 ${
+                  !isStepValid() ? "opacity-50 grayscale cursor-not-allowed" : ""
+                }`}
+              >
+                Continue
+                <HiOutlineChevronRight className="text-xl" />
+              </button>
+            ) : (
+              <Link href="/tracking" className="w-full sm:w-auto">
+                <button className="w-full sm:w-auto btn-premium btn-premium-secondary px-12 py-4 shadow-xl shadow-secondary/30">
+                  Confirm Booking
+                  <HiOutlineCheckCircle className="text-xl" />
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </main>
@@ -191,3 +264,9 @@ const BookingPage = () => {
 };
 
 export default BookingPage;
+
+const HiOutlinePlusCircle = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
